@@ -1,0 +1,71 @@
+import IssueList from "./IssueList";
+import { getIssues } from './fetchIssueData';
+import { useState }  from "react";
+
+/**
+ * Home page available at /
+ */
+const Home = () => {
+    const [error, setError] = useState('');
+    //const [isPending, setIsPending] = useState('');
+    const [issues, setIssues] = useState(null);
+    const [repoOwner, setRepoOwner] = useState('');
+    const [repoName, setRepoName] = useState('');
+    const [personalAccessToken, setPersonalAccessToken] = useState('');
+    //const [issueState, setIssueState] = useState('open');
+    
+    /**
+     * Handles the submission of form to get the list of issues
+     */
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const getIssuesData = await getIssues(repoOwner, repoName, personalAccessToken);
+        setError(getIssuesData.error);
+        setIssues(getIssuesData.issues);
+    };
+
+    return (
+        <div className="home">
+            <form onSubmit={handleSubmit}>
+                <label>Repo's owner</label>
+                <input
+                    type="text"
+                    required
+                    value={repoOwner}
+                    onChange={(e) => setRepoOwner(e.target.value)}
+                />
+                <label>Repo's name</label>
+                <input
+                    type="text"
+                    required
+                    value={repoName}
+                    onChange={(e) => setRepoName(e.target.value)} 
+                />
+                <label>Personal Acces Token (only needed for private repos)</label>
+                <input
+                    type="text"
+                    value={personalAccessToken}
+                    onChange={(e) => setPersonalAccessToken(e.target.value)}
+                />
+                <button>See issues</button>
+            </form>
+        
+            { error && <div>{ error }</div> }
+            { issues && <IssueList issues={issues} /> }
+            { (!issues && !error) && <div>Please enter the information for the repo you'd like to see</div>}
+        </div>
+    );
+}
+/**
+<label>Issue State</label>
+                <select
+                    value={issueState}
+                    onChange={(e) => setIssueState(e.target.value)}
+                >
+                    <option value='open'>open</option>
+                    <option value='all'>all</option>
+                    <option value='closed'>closed</option>
+                </select>
+ */
+ 
+export default Home;
