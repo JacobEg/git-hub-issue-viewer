@@ -7,7 +7,7 @@ import { useState }  from "react";
  */
 const Home = () => {
     const [error, setError] = useState('');
-    //const [isPending, setIsPending] = useState('');
+    const [isPending, setIsPending] = useState(false);
     const [issues, setIssues] = useState(null);
     const [repoOwner, setRepoOwner] = useState('');
     const [repoName, setRepoName] = useState('');
@@ -19,7 +19,9 @@ const Home = () => {
      */
     async function handleSubmit(e) {
         e.preventDefault();
+        setIsPending(true);
         const getIssuesData = await getIssues(repoOwner, repoName, personalAccessToken);
+        setIsPending(false);
         setError(getIssuesData.error);
         setIssues(getIssuesData.issues);
     };
@@ -51,21 +53,11 @@ const Home = () => {
             </form>
         
             { error && <div>{ error }</div> }
-            { issues && <IssueList issues={issues} /> }
-            { (!issues && !error) && <div>Please enter the information for the repo you'd like to see</div>}
+            { issues && <IssueList issues={issues} personalAccessToken={personalAccessToken} repoOwner={repoOwner} repoName={repoName}/> }
+            { isPending && <div>Loading...</div> }
+            { (!issues && !error && !isPending) && <div>Please enter the information for the repo you'd like to see</div> }
         </div>
     );
 }
-/**
-<label>Issue State</label>
-                <select
-                    value={issueState}
-                    onChange={(e) => setIssueState(e.target.value)}
-                >
-                    <option value='open'>open</option>
-                    <option value='all'>all</option>
-                    <option value='closed'>closed</option>
-                </select>
- */
  
 export default Home;

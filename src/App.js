@@ -14,7 +14,7 @@ function App() {
             <Route exact path="/">
               <Home/>
             </Route>
-            <Route path="/issues/:id">
+            <Route path="/issues/:owner/:name/:id">
               <IssueDetails/>
             </Route>
             <Route path="*">
