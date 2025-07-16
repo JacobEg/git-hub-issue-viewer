@@ -12,7 +12,9 @@ for that repo.
 ## Known bug(s)
 - When the user clicks on the "Back to Home" button in the IssueDetails component, the state of the Home page is not maintained.
 
-## Available Scripts
+## To setup
+
+Precondition: Have npm and electron installed on your machine.
 
 In the project directory, you can run:
 
