@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# git-hub-issue-tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+This is a project to create a viewer for issues on GitHub. The user enters a given repo and its owner and receives a list of the open issues on GitHub
+for that repo.
+
+## TODO
+- Implement pagination.
+- Implement access to private repos via a Personal Access Token.
+- Add more CSS to make it nicer-looking.
+
+## Known bug(s)
+- When the user clicks on the "Back to Home" button in the IssueDetails component, the state of the Home page is not maintained.
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+Installs the required dependencies.
 
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `npm run electron-win` (on Windows) | `npm run electron-mac` (on macOS)
 
-### `npm test`
+After the react server is started via `npm start`, run this command in a different terminal to start the electron desktop app.\
+Note: I don't have a macOS device and as such cannot personally vouch that the Electron app runs on macOS without complications.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Design and Implementation notes.
 
-### `npm run build`
+I divided the project into several Components and files. Each one meant to represent a core part of the app.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Home
+The home page available at `/`. This contains the `form` for getting the repo's name and owner in order to simplify passing it to `IssueList`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### IssueList
+Lists the title and author of the open issues in the repo. Each issue links to the `IssueDetails` component via the `Link` React component.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### IssueDetails
+Details the issue (its title, creator, body, and last updated time/date) and lists the comments under that ticket.\
+Available at /issues/:owner/:name/:id
 
-### `npm run eject`
+### NotFound
+The 404 page.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### fetchIssueData.js
+Functions making calls to the GitHub API to get the list of issues for a particular repo, a specific issue for a particular repo, and the comments for a specific issue.

@@ -28,27 +28,23 @@ const Home = () => {
 
     return (
         <div className="home">
-            <form onSubmit={handleSubmit}>
-                <label>Repo's owner</label>
+            <form onSubmit={handleSubmit} className="form-inline">
+                <label style={{'display': 'block'}}>Repo's owner:</label>
                 <input
                     type="text"
                     required
                     value={repoOwner}
                     onChange={(e) => setRepoOwner(e.target.value)}
                 />
-                <label>Repo's name</label>
+                <br></br>
+                <label style={{'display': 'block'}}>Repo's name:</label>
                 <input
                     type="text"
                     required
                     value={repoName}
                     onChange={(e) => setRepoName(e.target.value)} 
                 />
-                <label>Personal Acces Token (only needed for private repos)</label>
-                <input
-                    type="text"
-                    value={personalAccessToken}
-                    onChange={(e) => setPersonalAccessToken(e.target.value)}
-                />
+                <br></br>
                 <button>See issues</button>
             </form>
         
@@ -59,5 +55,11 @@ const Home = () => {
         </div>
     );
 }
- 
+
+/*<label>Personal Acces Token (only needed for private repos)</label>
+                <input
+                    type="text"
+                    value={personalAccessToken}
+                    onChange={(e) => setPersonalAccessToken(e.target.value)}
+                />*/
 export default Home;

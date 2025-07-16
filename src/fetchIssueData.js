@@ -26,7 +26,9 @@ async function getIssueDetails(repoOwner, repoName, issueNumber, personalAccessT
     try{
         const response  = await fetch(url, data);
         if (!response.ok) { // error coming back from server
-            throw Error(`Couldn't fetch issue from ${url} with token ${personalAccessToken}`);
+            let errorMsg = `Couldn't fetch issue from ${url}`;
+            if(personalAccessToken) errorMsg += `with token ${personalAccessToken}`;
+            throw Error(errorMsg);
         }
         issue = await response.json();
         console.log(issue);
@@ -65,9 +67,12 @@ async function getIssues(repoOwner, repoName, personalAccessToken=null){
     try{
         const response  = await fetch(url, data);
         if (!response.ok) { // error coming back from server
-            throw Error(`Couldn't fetch issue from ${url} with token ${personalAccessToken}`);
+            let errorMsg = `Couldn't fetch issues from ${url}`;
+            if(personalAccessToken) errorMsg += `with token ${personalAccessToken}`;
+            throw Error(errorMsg);
         }
         issues = await response.json();
+        issues = issues.sort((a, b) => b.id - a.id); // make sure most recent issue is at top
         console.log(issues);
     }catch(e){
         error = e.message;
@@ -104,9 +109,12 @@ async function getIssueComments(repoOwner, repoName, issueNumber, personalAccess
     try{
         const response  = await fetch(url, data);
         if (!response.ok) { // error coming back from server
-            throw Error(`Couldn't fetch comments from ${url} with token ${personalAccessToken}`);
+            let errorMsg = `Couldn't fetch comments from ${url}`;
+            if(personalAccessToken) errorMsg += `with token ${personalAccessToken}`;
+            throw Error(errorMsg);
         }
         comments = await response.json();
+        comments = comments.sort((a, b) => a.id - b.id); // make sure oldest comment is at top
         console.log(comments);
     }catch(e){
         error = e.message;

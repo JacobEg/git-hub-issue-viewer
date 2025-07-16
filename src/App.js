@@ -4,12 +4,15 @@ import Home from './Home';
 import IssueDetails from './IssueDetails';
 import NotFound from './NotFound';
 
+/**
+ * Top level app, routes to each Component (Home, IssueDetails, NotFound)
+ */
 function App() {
   return (
      <BrowserRouter>
       <div className="App">
-        <h1>GitHub Issue Tracker</h1>
         <div className="content">
+          <h1><img src="favicon.ico" alt="Ambassador GK" height="10%" width="10%" style={{"vertical-align":"middle"}}/>GitHub Issue Tracker</h1>
           <Switch>
             <Route exact path="/">
               <Home/>

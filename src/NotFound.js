@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom"
 
+/**
+ * 404 Page
+ */
 const NotFound = () => {
   return (
     <div className="not-found">
@@ -8,6 +11,6 @@ const NotFound = () => {
       <Link to="/">Back to the homepage...</Link>
     </div>
   );
-}
+};
  
 export default NotFound;

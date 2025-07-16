@@ -2,6 +2,10 @@ import { getIssueDetails, getIssueComments } from './fetchIssueData';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
  
+/**
+ * Gets a more detailed report of the issue and its comments (if any).
+ * Available at /issues/:owner/:name/:id
+ */
 const IssueDetails = () => {
     const { id, name, owner } = useParams();
     const history = useHistory();
@@ -12,14 +16,17 @@ const IssueDetails = () => {
     const location = useLocation();
     const state = location.state;
     let personalAccessToken = '';
-    if(state){
+    if(state && state.personalAccessToken){
         personalAccessToken = state.personalAccessToken;
     }
-    console.log('personalAccessToken =', personalAccessToken);
+    /*console.log('personalAccessToken =', personalAccessToken);
     console.log('id =', id);
     console.log('name =', name);
-    console.log('owner =', owner);
+    console.log('owner =', owner);*/
 
+    /**
+     * Get issue details and comments upon load
+     */
     useEffect(() =>{
         setIsPending(true);
         getIssueDetails(owner, name, id, personalAccessToken)
@@ -45,9 +52,9 @@ const IssueDetails = () => {
             { issue && 
                 <div>
                     <section>
-                        <article>
+                        <article className="issue-details">
                             <h2>{issue.title}</h2>
-                            <h5>Opened by: {issue.user.login}</h5>
+                            <h4>Opened by: {issue.user.login}</h4>
                             {issue.assignee && <h5>Assigned to: {issue.assignee.login}</h5>}
                             <h6>Last updated: {issue.updated_at}</h6>
                             <div>{issue.labels.map(label => (
@@ -56,8 +63,8 @@ const IssueDetails = () => {
                             <p>{issue.body}</p>
                         </article>
                         {comments && comments.map(comment => (
-                            <article>
-                                <h5>At {comment.updated_at}, {comment.user.login} commented:</h5>
+                            <article className='comment'>
+                                <h4>At {comment.updated_at}, {comment.user.login} commented:</h4>
                                 <p>{comment.body}</p>
                             </article>
                         ))}

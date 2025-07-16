@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
 
+/**
+ * Lists preview of each issue, including its title, and opener. Each issue links to IssueDetails.
+ * @param {object} props contains the issues, personalAccessToken, repoOwner, and repoName.
+ */
 const IssueList = (props) => {
     let issues = props.issues;
     let personalAccessToken = props.personalAccessToken;
