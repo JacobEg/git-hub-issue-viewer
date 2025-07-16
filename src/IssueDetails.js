@@ -63,7 +63,7 @@ const IssueDetails = () => {
                             <p>{issue.body}</p>
                         </article>
                         {comments && comments.map(comment => (
-                            <article className='comment'>
+                            <article className='comment' key={comment.id}>
                                 <h4>At {comment.updated_at}, {comment.user.login} commented:</h4>
                                 <p>{comment.body}</p>
                             </article>
